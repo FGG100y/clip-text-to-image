@@ -25,6 +25,18 @@
 
 - TODO: 后续看看怎么加入语音搜索能力。再加个树莓派继续DIY，其实真就可以说是爱咋咋地。
 
+- 两个示例：
+
+<!-- ![IMG1]("./data/external/images/fmh_OldBoys_blur.png")![IMG2]("./data/external/images/fmh_textQeuryImage_02.png") -->
+
+<center>
+<figure>
+<img src="./data/external/images/fmh_OldBoys_blur.png" width="300" height="200"/>
+<img src="./data/external/images/fmh_textQueryImage_02.png" width="300" height="200"/>
+</figure>
+</center>
+
+
 
 ## 完整项目目录
 
