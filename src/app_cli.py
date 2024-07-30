@@ -20,7 +20,7 @@ from data.faiss_index import (create_faiss_index, load_faiss_index,
 from data.image_processing import encode_images
 from data.text_processing import encode_texts
 from model.utils import load_model
-from visualization.utils import viz
+from visualization.utils import viz_subplot
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 img_embs_file_path = "data/processed/fmh_weixin_images_embedding.index"
@@ -59,7 +59,7 @@ def sematic_search(topk=3, vizualization=True):
         indices_distances.sort(key=lambda x: x[1])  # Sort based on the distances
 
         if vizualization:
-            viz(indices_distances, image_paths, tt)
+            viz_subplot(indices_distances, image_paths, tt)
 
 
 if __name__ == "__main__":
