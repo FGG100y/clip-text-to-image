@@ -29,13 +29,10 @@
 
 <!-- ![IMG1]("./data/external/images/fmh_OldBoys_blur.png")![IMG2]("./data/external/images/fmh_textQeuryImage_02.png") -->
 
-<center>
-<figure>
-<img src="./data/external/images/fmh_OldBoys_blur.png" width="300" height="200"/>
-<img src="./data/external/images/fmh_textQueryImage_02.png" width="300" height="200"/>
-</figure>
-</center>
-
+<div style="display: flex; justify-content: space-between;">
+  <img src="./data/external/images/fmh_OldBoys_blur.png" alt="Image 1" style="width: 45%;"/>
+  <img src="./data/external/images/fmh_textQueryImage_02.png" alt="Image 2" style="width: 45%;"/>
+</div>
 
 
 ## 完整项目目录
