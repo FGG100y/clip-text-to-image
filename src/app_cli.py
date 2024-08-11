@@ -6,9 +6,6 @@
 - Index the images using FAISS
 - Perform the semantic search
 
-TODO:
-    Gradio to interact with user
-
 """
 
 import numpy as np
