@@ -23,7 +23,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 img_embs_file_path = "data/processed/fmh_weixin_images_embedding.index"
 
 EMB_MODEL, preprocess = load_model(for_inference=True)
-image_paths = get_image_path.read(no_posix=True)
+image_paths = get_image_path.read(as_posix=True)
 
 
 try:
