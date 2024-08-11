@@ -92,18 +92,45 @@ def search_interface(text_input, image_input, topk):
         return f"An error occurred: {str(e)}"
 
 
-# Define the Gradio interface
-interface = gr.Interface(
-    fn=search_interface,
-    inputs=[
-        gr.Textbox(lines=2, placeholder="Enter a description...", label="Query"),
-        gr.Image(type="pil", label="Upload Image"),
-        gr.Slider(minimum=1, maximum=20, step=1, value=5, label="Number of Results"),
-    ],
-    outputs=gr.Gallery(label="Search Results", columns=1, object_fit="contain"),
-    title="Image Search with Text or Image",
-    description="Enter a description or upload an image to search for related images using CLIP.",
-)
+#  # Define the Gradio interface
+#  interface = gr.Interface(
+#      fn=search_interface,
+#      inputs=[
+#          gr.Textbox(lines=2, placeholder="Enter a description...", label="Query"),
+#          gr.Image(type="pil", label="Upload Image"),
+#          gr.Slider(minimum=1, maximum=20, step=1, value=5, label="Number of Results"),
+#      ],
+#      outputs=gr.Gallery(label="Search Results", columns=1, object_fit="contain"),
+#      title="Image Search with Text or Image",
+#      description="Enter a description or upload an image to search for related images using CLIP.",
+#  )
+
+# Gradio interface
+with gr.Blocks() as interface:
+    with gr.Row():
+        text_input = gr.Textbox(
+            label="Enter text query", placeholder="Type your search here..."
+        )
+        # Set `type="pil"` to return a PIL.Image object
+        image_input = gr.Image(type="pil", label="Or upload an image query")
+
+    with gr.Row():
+        topk_slider = gr.Slider(
+            minimum=1, maximum=10, step=1, value=2, label="Number of Results (Top K)"
+        )
+
+    # Button to trigger the search
+    search_button = gr.Button("Search")
+
+    # Output gallery for displaying results
+    output_gallery = gr.Gallery(label="Search Results")
+
+    # Set the button action to call the search function
+    search_button.click(
+        search_interface,
+        inputs=[text_input, image_input, topk_slider],
+        outputs=output_gallery,
+    )
 
 
 if __name__ == "__main__":
