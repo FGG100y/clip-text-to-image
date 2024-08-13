@@ -16,6 +16,7 @@ from data.faiss_index import (create_faiss_index, load_faiss_index,
                               save_faiss_index)
 from data.image_processing import encode_images
 from data.text_processing import encode_texts
+from model.audio import stt_model
 from model.utils import load_model
 from visualization.utils import viz_subplot
 
@@ -42,13 +43,45 @@ except (RuntimeError, FileNotFoundError):
     save_faiss_index(index, file_path=img_embs_file_path)
 
 
-text_query = ["四人帮", "女子头像"]
-text_embeddings = encode_texts(
-    text_query, batch_size=32, emb_model=EMB_MODEL, device=device
-)
+def main(using_stt=True, text_query=("四人帮", "小孩子在玩耍")):
+    if using_stt:
+        exit_words_l = [
+            # 都是朋友时
+            "再见",
+            "再見",
+            "先这样",
+            "byebye",
+            # 惹人生气时
+            "滚蛋",
+            "跪安吧",
+            "退下吧",
+        ]
+        faster_whisper = stt_model.load_faster_whisper()
+        while True:
+            try:
+                speech2text = stt_model.transcribe_fast(
+                    model=faster_whisper, duration=45, verbose=1
+                )
+                if not isinstance(speech2text, tuple):
+                    text_query = tuple([speech2text])
+            except Exception as e:
+                print(e)
+            else:
+                say_goodbye = [w for w in exit_words_l if w in speech2text]
+                if len(say_goodbye) > 0:
+                    print(say_goodbye)
+                    break
+            # searching
+            sematic_search(text_query, topk=3, vizualization=True)
+    else:
+        # searching
+        sematic_search(text_query, topk=3, vizualization=True)
 
 
-def sematic_search(topk=3, vizualization=True):
+def sematic_search(text_query, topk=3, vizualization=True):
+    text_embeddings = encode_texts(
+        text_query, batch_size=32, emb_model=EMB_MODEL, device=device
+    )
     distances, indices = index.search(text_embeddings, k=topk)
     text_query_as_title = [(txt,) * topk for txt in text_query]
     for Is, Ds, tt in zip(indices, distances, text_query_as_title):
@@ -60,4 +93,5 @@ def sematic_search(topk=3, vizualization=True):
 
 
 if __name__ == "__main__":
-    sematic_search()
+    main(using_stt=False)
+    main(using_stt=True)

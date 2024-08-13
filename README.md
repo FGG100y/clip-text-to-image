@@ -43,9 +43,12 @@
     + 将图片及其命名转换成base64的字节数据的过程，可以参考
       `src/data/utils/transform_raw_images.py`
 
+- 简单语音搜索
+    + 语音转文字功能（faster-whisper）
+
 - TODO: 继续DIY
     + 再加个树莓派和家庭NAS，其实真就可以说是爱咋咋地。
-    + 后续看看怎么加入语音搜索能力。
+    + 后续看看怎么加入语音搜索能力（agent-wise）。
         所谓“多模态”，没有语音其实不算，而一旦涉及音频数据，那个计算量，想象一个“仅”10秒
         钟的音频（44.1kHz采样频率、16位编码，约2M）或视频（1080p分辨率、30fps、每帧32位
         颜色深度，约240M）。再训练一个本身参数量已经巨大的模型... 没有开源，没有可能。
@@ -103,3 +106,18 @@
         ├── model
         └── visualization
 ```
+
+## 开发依赖
+
+如果使用语音转文字模型和功能，需要安装以下系统依赖：
+```sh
+apt install libasound2-dev portaudio19-dev
+```
+
+cuDNN报错：libcudnn*.so.8 问题 (不用apt安装系统级依赖包，pytorch已打包这些依赖包)：
+```sh
+export LD_LIBRARY_PATH="/home/username/.pyenv/versions/3.11.9/envs/vass-venv/lib/python3.11/site-packages/nvidia/cudnn/lib:$LD_LIBRARY_PATH"
+```
+
+注意：可以先查看已安装的 torch 所打包的 cuDNN 版本，比如：上述目录下的是 libcudnn*.so.9，
+意味着已经安装的 torch 版本较高，需要降低版本。
