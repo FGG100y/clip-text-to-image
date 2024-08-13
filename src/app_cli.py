@@ -43,7 +43,7 @@ except (RuntimeError, FileNotFoundError):
     save_faiss_index(index, file_path=img_embs_file_path)
 
 
-def main(using_stt=True, text_query=("四人帮", "小孩子在玩耍")):
+def main(using_stt=True, text_query=("四人帮", "小孩子在玩耍"), topk=1):
     if using_stt:
         exit_words_l = [
             # 都是朋友时
@@ -60,7 +60,7 @@ def main(using_stt=True, text_query=("四人帮", "小孩子在玩耍")):
         while True:
             try:
                 speech2text = stt_model.transcribe_fast(
-                    model=faster_whisper, duration=45, verbose=1
+                    model=faster_whisper, duration=35, adjust_duration=3, verbose=1
                 )
                 if not isinstance(speech2text, tuple):
                     text_query = tuple([speech2text])
@@ -72,10 +72,10 @@ def main(using_stt=True, text_query=("四人帮", "小孩子在玩耍")):
                     print(say_goodbye)
                     break
             # searching
-            sematic_search(text_query, topk=3, vizualization=True)
+            sematic_search(text_query, topk=topk, vizualization=True)
     else:
         # searching
-        sematic_search(text_query, topk=3, vizualization=True)
+        sematic_search(text_query, topk=topk, vizualization=True)
 
 
 def sematic_search(text_query, topk=3, vizualization=True):
