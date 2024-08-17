@@ -1,0 +1,12 @@
+scikit-learn
+cn-clip
+datasets
+faiss-cpu
+faster-whisper
+gradio
+matplotlib
+pillow
+pyaudio
+soundfile
+speechrecognition
+torch==2.1.2

@@ -7,7 +7,6 @@
 *.tmp
 *.docx
 *.xlsx
-requirements.in
 # cfg file; file (d)encryption key/psw etc
 *.cfg
 *.key
