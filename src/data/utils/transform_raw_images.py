@@ -30,6 +30,9 @@ random.seed(42)
 
 
 # 应该使用与CN-CLIP一致的文本端嵌入模型；CN-CLIP：vit-h-14/RoBERTa-wwm-ext-large-chinese
+# IDEA 不一定使用与 CN-CLIP 一致的文本端模型，因为主要用于相似图片描述文字的检索，使用一
+# 般的 sentence-transformer embedding 模型其实更方便 (2024-08-18 Sun)
+# 这里使用 faiss 的 index.search() 会导致相同数量的返回结果（除非做进一步后处理）
 
 # Get the first snapshot directory when using hugggingface hub directory
 base_dir = "./models/hfLLMs/RoBERTa-wwm-ext-large-chinese/snapshots"
